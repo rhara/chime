@@ -1,4 +1,4 @@
-# lmgcn
+# LM-GCN
 
 ### Publications for interest
 
