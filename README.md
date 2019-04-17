@@ -19,3 +19,9 @@ python test.py sample/1i7g_ligand.sdf sample/1i7g_protein.pdb.gz --verbose
 [Deep learning for molecules (Introduction to Chainer Chemistry)](https://www.slideshare.net/KentaOono/deep-learning-for-molecules-introduction-to-chainer-chemistry-93288837)<br/>
 [三島創薬](https://github.com/Mishima-syk)<br/>
 [PotentialNet for Drug Candidate Property Prediction (OFFICE OF TECHNOLOGY LICENSING, Stanford Univ.)](http://techfinder.stanford.edu/technologies/S18-023_potentialnet-for-drug-candidate)<br/>
+
+### 開発環境
+
+- Python 3.6
+- NumPy 1.16.2
+- RDKit 2019.03.1.0
