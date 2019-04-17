@@ -1,9 +1,10 @@
 import sys
+import numpy as np
 from rdkit import Chem
-# import numpy as np
-from lmgcn.matrix import getDistanceMatrix, getAdjacentMatrix
-from lmgcn.chemio import readLigand, readProtein
-from lmgcn.timer import Timer
+from lmgcn import Timer, readLigand, readProtein, getDistanceMatrix, getAdjacentMatrix
+
+np.set_printoptions(precision=3)
+
 
 class Opts:
     """
@@ -23,6 +24,7 @@ class Opts:
         self.ligname = self.args[1]
         self.protname = self.args[2]
 
+
 def main(argv):
     opts = Opts(argv)
 
@@ -38,6 +40,7 @@ def main(argv):
     if opts.verbose:
         print(R)
         print(A)
+
 
 if __name__ == '__main__':
     main(sys.argv)

@@ -10,7 +10,6 @@ import numpy as np
 __VERSION__ = '0.1.1'
 __AUTHOR__ = 'hara@lifematics.co.jp'
 
-np.set_printoptions(precision=3, threshold=np.inf, linewidth=300)
 
 class ComplexFeaturizer:
     def __init__(self,
@@ -133,4 +132,3 @@ class ComplexFeaturizer:
                  E=self.E,
                  P=self.P)
         print('Saved in %s' % (fname,), file=sys.stderr)
-

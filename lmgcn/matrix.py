@@ -20,6 +20,7 @@ def getDistanceMatrix(mol1, mol2=None, dtype=np.float16):
 
     return matrix
 
+
 def getAdjacentMatrix(mol, bondorder=False):
     """
     Calculate adjacent matrix of np.array

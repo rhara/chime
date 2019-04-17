@@ -1,6 +1,9 @@
 import sys
-from lmgcn.timer import Timer
-from lmgcn.aconv import ComplexFeaturizer
+import numpy as np
+from lmgcn import Timer, ComplexFeaturizer
+
+np.set_printoptions(precision=3, linewidth=300)
+
 
 class Opts:
     """
@@ -25,6 +28,7 @@ class Opts:
         self.pro_fname = args[2]
         self.out_fname = args[3]
 
+
 def main(argv):
     opts = Opts(argv)
     rmin, rmax, rint = map(float, opts.radials_setup.split())
@@ -44,6 +48,7 @@ def main(argv):
     print('Shapes: R:%s, Z:%s, E:%s, P:%s' % (R.shape, Z.shape, E.shape, P.shape), file=sys.stderr)
 
     featurizer.save(opts.out_fname)
+
 
 if __name__ == '__main__':
     main(sys.argv)
