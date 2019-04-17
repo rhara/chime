@@ -3,6 +3,7 @@ from rdkit import Chem
 # import numpy as np
 from lmgcn.matrix import getDistanceMatrix, getAdjacentMatrix
 from lmgcn.chemio import readLigand, readProtein
+from lmgcn.timer import Timer
 
 class Opts:
     """
@@ -29,8 +30,10 @@ def main(argv):
     protein = readProtein(opts.protname)
     complex_mol = Chem.CombineMols(ligand, protein)
 
+    timer = Timer()
     R = getDistanceMatrix(complex_mol)
-    A = getAdjacentMatrix(complex_mol, bondorder=True)
+    A = getAdjacentMatrix(complex_mol, bondorder=False)
+    print('%.2fs' % timer.elapsed(), file=sys.stderr)
 
     if opts.verbose:
         print(R)

@@ -3,6 +3,7 @@ Atomic Conv for Complex inspired by Pande
 """
 
 from .chemio import readLigand, readProtein
+from .matrix import getAtomicNumVector, getDistanceMatrix
 import sys
 import numpy as np
 
@@ -53,23 +54,15 @@ class ComplexFeaturizer:
         N1 = lig.GetNumAtoms()
         N2 = pro.GetNumAtoms()
 
-        atomtype1 = np.array([a.GetAtomicNum() for a in lig.GetAtoms()])
-        atomtype2 = np.array([a.GetAtomicNum() for a in pro.GetAtoms()])
-        conf1 = lig.GetConformer(0)
-        conf2 = pro.GetConformer(0)
-        xyzs1 = conf1.GetPositions()
-        xyzs2 = conf2.GetPositions()
+        atomtype1 = getAtomicNumVector(lig)
+        atomtype2 = getAtomicNumVector(pro)
 
         self.R = np.zeros([N1, self.M])
 
-        dist_mat = np.zeros([N1, N2])
+        dist_mat = getDistanceMatrix(lig, pro)
 
-        for i in range(N1):
-            ci = np.tile(xyzs1[i], N2).reshape((N2, 3))
-            dist_mat[i] = np.linalg.norm(ci - xyzs2, axis=1)
-
-        nbors = np.zeros([N1, self.M], dtype=np.int)
-        self.Z = np.zeros([N1, self.M], dtype=np.int)
+        nbors = np.zeros([N1, self.M], dtype=np.int16)
+        self.Z = np.zeros([N1, self.M], dtype=np.int16)
         for i in range(N1):
             nbors[i] = np.argsort(dist_mat[i])[:self.M]
             self.R[i] = dist_mat[i, nbors[i]]
