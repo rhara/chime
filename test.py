@@ -38,8 +38,8 @@ def main(argv):
     print('%.2fs' % timer.elapsed(), file=sys.stderr)
 
     if opts.verbose:
-        print(R)
-        print(A)
+        print(R, file=sys.stderr)
+        print(A, file=sys.stderr)
 
 
 if __name__ == '__main__':
