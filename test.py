@@ -1,34 +1,13 @@
-import sys, gzip
+import sys
 from rdkit import Chem
-import numpy as np
-
-def getDistanceMatrix(mol):
-    coords = mol.GetConformer(0).GetPositions()
-
-    natoms = mol.GetNumAtoms()
-    matrix = np.zeros((natoms, natoms))
-    bonds = np.zeros((natoms, natoms), dtype=np.int)
-
-    for i in range(natoms):
-        cs = np.tile(coords[i], natoms).reshape((natoms, 3))
-        d = np.linalg.norm(coords - cs, axis=1)
-        matrix[i] = d
-
-    return matrix
-
-def getAdjacentMatrix(mol):
-    natoms = mol.GetNumAtoms()
-    matrix = np.zeros((natoms, natoms))
-    for i in range(natoms-1):
-        for j in range(i+1, natoms):
-            bond = mol.GetBondBetweenAtoms(i, j)
-            if bond:
-                matrix[i, j] = matrix[j, i] = 1
-
-    return matrix
-
+# import numpy as np
+from lmgcn.matrix import getDistanceMatrix, getAdjacentMatrix
+from lmgcn.chemio import readLigand, readProtein
 
 class Opts:
+    """
+    Option parser specific to this script
+    """
     def __init__(self, argv):
         argv = list(argv)
         self.verbose = False
@@ -43,16 +22,19 @@ class Opts:
         self.ligname = self.args[1]
         self.protname = self.args[2]
 
+def main(argv):
+    opts = Opts(argv)
 
-opts = Opts(sys.argv)
+    ligand = readLigand(opts.ligname)
+    protein = readProtein(opts.protname)
+    complex_mol = Chem.CombineMols(ligand, protein)
 
-ligand = Chem.MolFromMolBlock((gzip.open if opts.ligname.endswith('.gz') else open)(opts.ligname, 'rt').read())
-protein = Chem.MolFromPDBBlock((gzip.open if opts.protname.endswith('.gz') else open)(opts.protname, 'rt').read())
-complex_mol = Chem.CombineMols(ligand, protein)
+    R = getDistanceMatrix(complex_mol)
+    A = getAdjacentMatrix(complex_mol, bondorder=True)
 
-R = getDistanceMatrix(complex_mol)
-A = getAdjacentMatrix(complex_mol)
+    if opts.verbose:
+        print(R)
+        print(A)
 
-if opts.verbose:
-    print(R)
-    print(A)
+if __name__ == '__main__':
+    main(sys.argv)
