@@ -31,4 +31,5 @@ It's still too early to tell anything here.
 
 ```
 python test.py sample/1i7g_ligand.sdf sample/1i7g_protein.pdb.gz --verbose
+python atomic_conv.py sample/1i7g_ligand.sdf sample/1i7g_protein.pdb.gz 1i7g_out.npz
 ```
