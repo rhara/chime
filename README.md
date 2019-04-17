@@ -13,7 +13,7 @@
 [(Slide) Artificial Intelligence Methods for Molecular Property Prediction](https://bluewaters.ncsa.illinois.edu/liferay-content/document-library/18symposium-slides/feinberg.pdf)<br/>
 [(Blog) ADMET Prediction with PotentialNet](http://blog.kzfmix.com/entry/1553921144)<br/>
 [(Slide) Deep learning for molecules (Introduction to Chainer Chemistry)](https://www.slideshare.net/KentaOono/deep-learning-for-molecules-introduction-to-chainer-chemistry-93288837)<br/>
-[(Github) 三島創薬](https://github.com/Mishima-syk)<br/>
+[(Github) Mishima.syk](https://github.com/Mishima-syk)<br/>
 [(Document) PotentialNet for Drug Candidate Property Prediction (OFFICE OF TECHNOLOGY LICENSING, Stanford Univ.)](http://techfinder.stanford.edu/technologies/S18-023_potentialnet-for-drug-candidate)<br/>
 [(Github) Implementation of Graph Convolutional Networks in TensorFlow](https://github.com/tkipf/gcn)<br/>
 [(Github) Graph Convolutional Networks in PyTorch](https://github.com/tkipf/pygcn)<br/>
