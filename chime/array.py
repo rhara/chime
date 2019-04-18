@@ -5,6 +5,16 @@ def getAtomicNumVector(mol):
     return np.array([a.GetAtomicNum() for a in mol.GetAtoms()], dtype=np.uint8)
 
 
+def getFormalChargeVector(mol):
+    return np.array([a.GetFormalCharge() for a in mol.GetAtoms()], dtype=np.int8)
+
+
+def getPartialChargeVector(mol):
+    from rdkit.Chem import rdPartialCharges
+    rdPartialCharges.ComputeGasteigerCharges(mol)
+    return np.array([float(a.GetProp('_GasteigerHCharge')) for a in mol.GetAtoms()], dtype=np.float16)
+
+
 def getDistanceMatrix(mol1, mol2=None, dtype=np.float16):
     if mol2 is None:
         mol2 = mol1

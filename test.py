@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 from rdkit import Chem
-from chime import Timer, readLigand, readProtein, getDistanceMatrix, getAdjacentMatrix
+from chime import Timer, readLigand, readProtein, getDistanceMatrix, getAdjacentMatrix, getPartialChargeVector, getFormalChargeVector
 
 np.set_printoptions(precision=3)
 
@@ -36,6 +36,9 @@ def main(argv):
     R = getDistanceMatrix(complex_mol)
     A = getAdjacentMatrix(complex_mol, bondorder=False)
     print('%.2fs' % timer.elapsed(), file=sys.stderr)
+
+    # print(getFormalChargeVector(ligand))
+    # print(getPartialChargeVector(ligand))
 
     if opts.verbose:
         print(R, file=sys.stderr)
