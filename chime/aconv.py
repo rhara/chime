@@ -3,7 +3,7 @@ Atomic Conv for Complex inspired by Pande
 """
 
 from .chemio import readLigand, readProtein
-from .matrix import getAtomicNumVector, getDistanceMatrix
+from .array import getAtomicNumVector, getDistanceMatrix
 import sys
 import numpy as np
 

@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 from rdkit import Chem
-from lmgcn import Timer, readLigand, readProtein, getDistanceMatrix, getAdjacentMatrix
+from chime import Timer, readLigand, readProtein, getDistanceMatrix, getAdjacentMatrix
 
 np.set_printoptions(precision=3)
 
