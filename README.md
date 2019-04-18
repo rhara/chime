@@ -1,4 +1,4 @@
-# LM-GCN
+# CHIME (CHeMistry and maCHInE)
 
 ### Publications for interest
 
