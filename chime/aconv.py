@@ -3,7 +3,7 @@ Atomic Conv for Complex inspired by Pande
 """
 
 from .chemio import readLigand, readProtein
-from .array import getAtomicNumVector, getDistanceMatrix
+from .graph_features import getAtomTypeVector, getAtomPairDistanceMatrix, getNeighborList
 import sys
 import numpy as np
 
@@ -53,19 +53,13 @@ class ComplexFeaturizer:
         N1 = lig.GetNumAtoms()
         N2 = pro.GetNumAtoms()
 
-        atomtype1 = getAtomicNumVector(lig)
-        atomtype2 = getAtomicNumVector(pro)
+        atomtype1 = getAtomTypeVector(lig)
+        atomtype2 = getAtomTypeVector(pro)
 
         self.R = np.zeros([N1, self.M])
 
-        dist_mat = getDistanceMatrix(lig, pro)
-
-        nbors = np.zeros([N1, self.M], dtype=np.int16)
-        self.Z = np.zeros([N1, self.M], dtype=np.int16)
-        for i in range(N1):
-            nbors[i] = np.argsort(dist_mat[i])[:self.M]
-            self.R[i] = dist_mat[i, nbors[i]]
-            self.Z[i] = atomtype2[nbors[i]]
+        dist_mat = getAtomPairDistanceMatrix(lig, pro)
+        self.R, self.Z = getNeighborList(lig, pro, M=self.M)
 
     def atomtypeConvolution(self):
         """

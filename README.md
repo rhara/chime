@@ -1,4 +1,4 @@
-# CHIME (CHeMistry and maCHInE)
+# CHIME (CHeMistry and maCHInE learning)
 
 ### Publications for interest
 
@@ -30,6 +30,7 @@
 It's still too early to tell anything here.
 
 ```
-python test.py sample/1i7g_ligand.sdf sample/1i7g_protein.pdb.gz --verbose
-python atomic_conv.py sample/1i7g_ligand.sdf sample/1i7g_protein.pdb.gz 1i7g_out.npz
+pip install -U .
+chime_test.py sample/1i7g_ligand.sdf sample/1i7g_protein.pdb.gz --verbose
+atomic_conv.py sample/1i7g_ligand.sdf sample/1i7g_protein.pdb.gz 1i7g_out.npz
 ```

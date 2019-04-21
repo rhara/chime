@@ -1,2 +1,5 @@
 /*.npz
 __pycache__/
+/*.egg-info/
+/dist/
+/test/
