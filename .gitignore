@@ -1,6 +1,7 @@
 /*.npz
 __pycache__/
 /*.egg-info/
+/build/
 /dist/
 /test/
 /tmp/
