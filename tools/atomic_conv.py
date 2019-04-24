@@ -2,7 +2,7 @@
 
 import sys
 import numpy as np
-from chime import Timer, ComplexFeaturizer
+from chime import Timer, ComplexFeaturizer, readLigand, readProtein
 
 np.set_printoptions(precision=3, linewidth=300)
 
@@ -14,7 +14,8 @@ class Opts:
     def __init__(self, argv):
         argv = list(argv)
         self.neighbor_size = 12
-        self.radials_setup = '1.5 12.0  0.5'
+        self.radials_setup = '1.5 6.0  0.5'
+        self.padding = 90
         args = []
         while argv:
             a = argv.pop(0)
@@ -23,6 +24,9 @@ class Opts:
                 continue
             if a in ['--radials-setup', '-R']:
                 self.radials_setup = argv.pop(0)
+                continue
+            if a in ['--padding', '-P']:
+                self.padding = int(argv.pop(0))
                 continue
             args.append(a)
         self.prog_name = args[0]
@@ -33,16 +37,31 @@ class Opts:
 
 def main(argv):
     opts = Opts(argv)
-    rmin, rmax, rint = map(float, opts.radials_setup.split())
-    radials = (rmin, rmax, rint)
+    radials = tuple(map(float, opts.radials_setup.split()))
 
-    featurizer = ComplexFeaturizer(M=opts.neighbor_size,
-                                   radials=radials)
+    lig = readLigand(opts.lig_fname, sanitize=False)
+    lig.SetProp('fname', opts.lig_fname)
+    pro = readProtein(opts.pro_fname)
+    pro.SetProp('fname', opts.pro_fname)
+
+    if not lig or opts.padding < lig.GetNumAtoms():
+        natoms = 0
+        try:
+            natoms = lig.GetNumAtoms()
+        except:
+            pass
+        print(f'Error "{opts.lig_fname}" natoms={natoms} is too big and is skipped', file=sys.stderr)
+        sys.exit(-1)
+
+    featurizer = ComplexFeaturizer(atomtype_list=[6,7,8,16],
+                                   M=opts.neighbor_size,
+                                   radials=radials,
+                                   padding=opts.padding)
 
     print('radials=%s' % featurizer.radials, file=sys.stderr)
 
     timer = Timer()
-    featurizer(opts.lig_fname, opts.pro_fname)
+    featurizer(lig, pro)
     print('%.2fs' % timer.elapsed(), file=sys.stderr)
 
     R, Z, E, P = featurizer.R, featurizer.Z, featurizer.E, featurizer.P

@@ -2,7 +2,6 @@
 Atomic Conv for Complex inspired by Pande
 """
 
-from .chemio import readLigand, readProtein
 from .graph_features import getAtomTypeVector, getAtomPairDistanceMatrix, getNeighborList
 import sys
 import numpy as np
@@ -18,25 +17,26 @@ class ComplexFeaturizer:
                  r_s=1.5,
                  sigma_s=1.0,
                  M=12,
+                 padding=70,
                 ):
         self.atomtype_list = atomtype_list
         self.radials = np.arange(radials[0], radials[1]+1e-7, radials[2])
         self.r_s = r_s
         self.sigma_s = sigma_s
         self.M = 12
-        self.lig_fname = None
-        self.pro_fname = None
+        self.padding = padding
+        self.lig = None
+        self.pro = None
         self.R = None
         self.Z = None
         self.E = None
         self.P = None
 
-    def __call__(self, lig_fname, pro_fname):
-        self.lig_fname = lig_fname
-        self.pro_fname = pro_fname
-        lig = readLigand(lig_fname)
-        pro = readProtein(pro_fname)
-
+    def __call__(self, lig, pro):
+        self.lig = lig
+        self.pro = pro
+        lig_fname = lig.GetProp('fname')
+        pro_fname = pro.GetProp('fname')
         print('Ligand: %s: %d' % (lig_fname, lig.GetNumAtoms()), file=sys.stderr)
         print('Protein: %s: %d' % (pro_fname, pro.GetNumAtoms()), file=sys.stderr)
 
@@ -113,14 +113,21 @@ class ComplexFeaturizer:
                     else:
                         self.P[j, k, i] = beta[i]*np.sum(fs(r_list, cutoff)) + bias[i]
 
+        if N < self.padding:
+            _P = np.ones((self.padding - N, Na, Nr))*v0
+            self.P = np.vstack((self.P, _P))
+
     def save(self, fname):
         """
         Save attributes in npz format
         """
 
+        lig_fname = self.lig.GetProp('fname')
+        pro_fname = self.pro.GetProp('fname')
+
         np.savez(fname,
-                 lig_fname=self.lig_fname,
-                 pro_fname=self.pro_fname,
+                 lig_fname=lig_fname,
+                 pro_fname=pro_fname,
                  R=self.R,
                  Z=self.Z,
                  E=self.E,
