@@ -15,8 +15,8 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     packages=find_packages(),
-    scripts=['tools/atomic_conv.py', 'tools/chime_test.py'],
-    url='https://gitlab.com/rhara/%s' % name,
+    scripts=['tools/atomic_conv.py', 'tools/atomic_conv_bulk.py', 'tools/atomic_conv_collect.py', 'tools/chime_test.py'],
+    url='https://github.com/rhara/%s' % name,
     classifiers = [
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
