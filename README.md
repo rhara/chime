@@ -4,7 +4,7 @@
 
 [(Paper) Step Change Improvement in ADMET Prediction with PotentialNet Deep Featurization (Pande 2019)](https://arxiv.org/abs/1903.11789)<br/>
 [(Paper) PotentialNet for Molecular Property Prediction (Pande 2018)](https://arxiv.org/abs/1803.04465)<br/>
-[(Paper) Atomic Convolutional Networks for Predicting Protein-Ligand Binding Affinity](https://arxiv.org/abs/1703.10603)<br/>
+[(Paper) Atomic Convolutional Networks for Predicting Protein-Ligand Binding Affinity (Pande 2017)](https://arxiv.org/abs/1703.10603)<br/>
 [(Paper) Molecular Graph Convolutions: Moving Beyond Fingerprints (Pande 2016)](https://arxiv.org/abs/1603.00856)<br/>
 [(Paper) Gated Graph Sequence Neural Networks (2015)](https://arxiv.org/abs/1511.05493)<br/>
 
